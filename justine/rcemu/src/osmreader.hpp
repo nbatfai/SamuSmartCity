@@ -168,7 +168,7 @@ public:
     catch ( std::exception &err )
       {
 
-        google::protobuf::ShutdownProtobufLibrary();
+        //google::protobuf::ShutdownProtobufLibrary();
         throw;
       }
 
@@ -177,7 +177,7 @@ public:
   ~OSMReader()
   {
 
-    google::protobuf::ShutdownProtobufLibrary();
+    //google::protobuf::ShutdownProtobufLibrary();
 
   }
 

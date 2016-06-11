@@ -17,7 +17,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-AC_INIT([justine], [0.0.17], [nbatfai@gmail.com])
+AC_INIT([jennifer], [0.0.1], [nbatfai@gmail.com])
 AC_CONFIG_FILES([Makefile])
 AM_INIT_AUTOMAKE
 AC_CHECK_LIB(pthread, pthread_create)
@@ -36,11 +36,13 @@ DX_PS_FEATURE(OFF)
 DX_INIT_DOXYGEN(justine, Doxyfile, doc)
 
 AC_LANG([C++])
-CXXFLAGS='-Wall -std=c++1y -O3'
+CXXFLAGS='-Wall -std=c++14 -O3'
 LDFLAGS='-lboost_system -lpthread -lboost_date_time -lboost_filesystem'
-AX_CXX_COMPILE_STDCXX_11()
+
+AX_CXX_COMPILE_STDCXX_14(ext, mandatory)
+
 AC_PROG_LIBTOOL
-BOOST_REQUIRE([1.46.0])
+BOOST_REQUIRE([1.58.0])
 BOOST_GRAPH
 BOOST_SYSTEM
 BOOST_PROGRAM_OPTIONS
