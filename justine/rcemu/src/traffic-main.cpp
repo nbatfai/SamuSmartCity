@@ -97,7 +97,7 @@ int main ( int argc, char* argv[] )
   if ( vm.count ( "minutes" ) )
     minutes = vm["minutes"].as < int > ();
   
-  int catchdist {15};
+  int catchdist {25};
   if ( vm.count ( "catchdist" ) )
     catchdist = vm["catchdist"].as < int > ();
 
