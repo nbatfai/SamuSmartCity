@@ -254,23 +254,45 @@ public:
 
             double lon1 {0.0}, lat1 {0.0};
             toGPS(car1->from(), car1->to() , car1->get_step(), &lon1, &lat1);
-
             double lon2 {0.0}, lat2 {0.0};
-            for (auto car : m_smart_cars) {
 
-                if (car->get_type() == CarType::GANGSTER) {
+            if (!car1->is_passenger()) {
 
-                    toGPS(car->from(), car->to() , car->get_step(), &lon2, &lat2);
-                    double d = dst(lon1, lat1, lon2, lat2);
 
-                    if (d < m_catchdist) {
+                for (auto car : m_smart_cars) {
 
-                        car1->captured_gangster();
-                        car->set_type(CarType::CAUGHT);
 
+
+                    if (car->get_type() == CarType::GANGSTER) {
+
+                        toGPS(car->from(), car->to() , car->get_step(), &lon2, &lat2);
+                        double d = dst(lon1, lat1, lon2, lat2);
+
+                        if (d < m_catchdist) {
+
+                            car1->captured_gangster(car);
+                            car->set_type(CarType::GOTIN);
+
+                        }
                     }
+
                 }
+
+            } else {
+
+
+                toGPS(2909260989, 0, 0, &lon2, &lat2);
+                double d = dst(lon1, lat1, lon2, lat2);
+
+                if (d < m_catchdist) {
+
+                    car1->gotOut()->set_type(CarType::GANGSTER);
+
+                }
+
             }
+
+
         }
     }
 

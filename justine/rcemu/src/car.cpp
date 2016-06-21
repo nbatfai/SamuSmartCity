@@ -385,26 +385,18 @@ void justine::robocar::SmartCar::nextGuidedEdge(void)
 
             } else {
 
-                //if(i+1 != route.end())
-                //{
-                //next_m_to;
                 osmium::unsigned_object_id_type inv = traffic.alist_inv(to_node(), * (i + 1));
 
                 if (inv != -1) {
+
                     next_m_to = inv;
+
                 } else {
 
                     next_m_to = 0;
-                    //  return;
                 }
 
-                //}
-                //else {
-                 //   next_m_to = 0;
-                    m_step = 0;
-
-                //}
-
+                m_step = 0;
 
                 next_m_from = to_node();
             }
@@ -451,6 +443,10 @@ void justine::robocar::SmartCar::step()
         else
             nextEdge();
 
+    } else if (m_type == CarType::GOTIN) {
+
+        return;
+	
     } else if (m_type == CarType::CAUGHT) {
 
         return;

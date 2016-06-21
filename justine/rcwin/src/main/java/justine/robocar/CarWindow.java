@@ -198,6 +198,8 @@ public class CarWindow extends javax.swing.JFrame {
                             waypoints.add(new WaypointGangster(lat, lon));
                         } else if (type == 3) {
                             waypoints.add(new WaypointCaught(lat, lon));
+                        } else if (type == 4) {
+                            //waypoints.add(new WaypointCaught(lat, lon));
                         } else {
                             waypoints.add(new org.jxmapviewer.viewer.DefaultWaypoint(lat, lon));
                         }

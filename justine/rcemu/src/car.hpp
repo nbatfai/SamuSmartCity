@@ -229,19 +229,35 @@ public:
     return m_name;
   }
 
+  bool is_passenger() const
+  {
+    return isPassenger;
+  }
+
+  std::shared_ptr<SmartCar> gotOut() 
+  {
+    isPassenger = false;
+    return passenger;
+  }
+      
   int get_num_captured_gangsters() const
   {
     return m_num_captured_gangsters;
   }
 
-  void captured_gangster ( void )
+  void captured_gangster ( std::shared_ptr<SmartCar> & passenger)
   {
     ++m_num_captured_gangsters;
+    isPassenger = true;
+    this->passenger = passenger; 
   }
+  
 protected:
 
   int m_num_captured_gangsters {0};
   std::string m_name;
+  std::shared_ptr<SmartCar> passenger{nullptr};
+  bool isPassenger{false};
 
 };
 
