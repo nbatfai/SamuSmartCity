@@ -47,7 +47,7 @@ namespace robocar
 
 enum class CarType: unsigned int
 {
-  NORMAL=0, POLICE, GANGSTER, CAUGHT
+  NORMAL=0, POLICE, GANGSTER, CAUGHT, GOTIN
 };
 
 class Traffic;

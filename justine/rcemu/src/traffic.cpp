@@ -123,7 +123,7 @@ void justine::robocar::Traffic::cmd_session(boost::asio::ip::tcp::socket client_
                        << std::endl;
 
                     for (auto car : cars_copy) {
-                        car->step();
+                        //car->step();
 
                         ss << *car
                            <<  " " << std::endl;

@@ -330,7 +330,7 @@ void justine::sampleclient::MyShmClient::start10(boost::asio::io_service &io_ser
             gngstrs = gangsters(socket, cop, t);
 
             if (gngstrs.size() > 0)
-                g = gngstrs[0].to;
+                g = gngstrs[0].from;
             else
                 g = 0;
 

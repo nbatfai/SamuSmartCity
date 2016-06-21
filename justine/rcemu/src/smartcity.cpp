@@ -177,7 +177,8 @@ int main ( int argc, char* argv[] )
         justine::robocar::SmartCity smartCity ( osm_input.c_str(), shm.c_str() );
 
       std::cout << "ready."<<  std::endl;
-      for ( ;; );
+      for ( ;; )
+	sleep(1);
 
     }
   catch ( std::exception &err )
