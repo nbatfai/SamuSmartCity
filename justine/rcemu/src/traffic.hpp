@@ -262,7 +262,6 @@ public:
                 for (auto car : m_smart_cars) {
 
 
-
                     if (car->get_type() == CarType::GANGSTER) {
 
                         toGPS(car->from(), car->to() , car->get_step(), &lon2, &lat2);
@@ -272,6 +271,7 @@ public:
 
                             car1->captured_gangster(car);
                             car->set_type(CarType::GOTIN);
+			    //set_salist(car->from(), car->to(), salist(car->from(), car->to()) + 1);
 
                         }
                     }

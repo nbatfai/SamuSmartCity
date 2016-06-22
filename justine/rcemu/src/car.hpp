@@ -45,9 +45,9 @@ namespace justine
 namespace robocar
 {
 
-enum class CarType: unsigned int
+enum class CarType : unsigned int
 {
-  NORMAL=0, POLICE, GANGSTER, CAUGHT, GOTIN
+    NORMAL = 0, POLICE, GANGSTER, CAUGHT, GOTIN
 };
 
 class Traffic;
@@ -56,69 +56,63 @@ class Car
 {
 public:
 
-  Car ( Traffic & traffic , CarType type = CarType::NORMAL );
+    Car(Traffic &traffic , CarType type = CarType::NORMAL);
 
-  virtual void init();
+    virtual void init();
 
-  virtual void step();
+    virtual void step();
 
-  osmium::unsigned_object_id_type from() const
-  {
-    return m_from;
-  }
-  osmium::unsigned_object_id_type to() const
-  {
-    return m_to;
-  }
-  osmium::unsigned_object_id_type get_step() const
-  {
-    return m_step;
-  }
-  CarType get_type() const
-  {
-    return m_type;
-  }
-  void set_type ( CarType type )
-  {
-    m_type = type;
-  }
+    osmium::unsigned_object_id_type from() const {
+        return m_from;
+    }
+    osmium::unsigned_object_id_type to() const {
+        return m_to;
+    }
+    osmium::unsigned_object_id_type get_step() const {
+        return m_step;
+    }
+    CarType get_type() const {
+        return m_type;
+    }
+    void set_type(CarType type) {
+        m_type = type;
+    }
 
-  osmium::unsigned_object_id_type to_node() const;
-  osmium::unsigned_object_id_type get_max_steps() const;
-  virtual void nextEdge ( void );
-  virtual void nextSmarterEdge ( void );
+    osmium::unsigned_object_id_type to_node() const;
+    osmium::unsigned_object_id_type get_max_steps() const;
+    virtual void nextEdge(void);
+    virtual void nextSmarterEdge(void);
 
-  virtual void print ( std::ostream & os ) const
-  {
+    virtual void print(std::ostream &os) const {
 
-    os << m_from
-       << " "
-       << to_node()
-       << " "
-       << get_max_steps()
-       << " "
-       << get_step()
-       << " "
-       << static_cast<unsigned int> ( get_type() );
+        os << m_from
+           << " "
+           << to_node()
+           << " "
+           << get_max_steps()
+           << " "
+           << get_step()
+           << " "
+           << static_cast<unsigned int>(get_type());
 
-  }
+    }
 
-  friend std::ostream & operator<< ( std::ostream & os, Car & c )
-  {
+    friend std::ostream &operator<< (std::ostream &os, Car &c) {
 
-    c.print ( os );
+        c.print(os);
 
-    return os;
+        return os;
 
-  }
+    }
+
 
 protected:
-  Traffic & traffic;
-  CarType m_type {CarType::NORMAL};
-  osmium::unsigned_object_id_type m_from {3130863972};
-  osmium::unsigned_object_id_type m_to {0};
-  osmium::unsigned_object_id_type m_step {0};
-    
+    Traffic &traffic;
+    CarType m_type {CarType::NORMAL};
+    osmium::unsigned_object_id_type m_from {3130863972};
+    osmium::unsigned_object_id_type m_to {0};
+    osmium::unsigned_object_id_type m_step {0};
+
 private:
 
 };
@@ -126,36 +120,35 @@ private:
 class AntCar : public Car
 {
 public:
-  AntCar ( Traffic & traffic );
+    AntCar(Traffic &traffic);
 
-  virtual void nextSmarterEdge ( void );
+    virtual void nextSmarterEdge(void);
 
-  virtual void print ( std::ostream & os ) const
-  {
+    virtual void print(std::ostream &os) const {
 
-    os << m_from
-       << " "
-       << to_node()
-       << " "
-       << get_max_steps()
-       << " "
-       << get_step()
-       << " "
-       << static_cast<unsigned int> ( get_type() );
+        os << m_from
+           << " "
+           << to_node()
+           << " "
+           << get_max_steps()
+           << " "
+           << get_step()
+           << " "
+           << static_cast<unsigned int>(get_type());
 
-  }
+    }
 
-  osmium::unsigned_object_id_type ant ( void );  
-  osmium::unsigned_object_id_type ant_rnd ( void );  
-  osmium::unsigned_object_id_type ant_rernd ( void );  
-  osmium::unsigned_object_id_type ant_mrernd ( void );  
-  
-  static AdjacencyList alist;
-  static AdjacencyList alist_evaporate;
-  
+    osmium::unsigned_object_id_type ant(void);
+    osmium::unsigned_object_id_type ant_rnd(void);
+    osmium::unsigned_object_id_type ant_rernd(void);
+    osmium::unsigned_object_id_type ant_mrernd(void);
+
+    static AdjacencyList alist;
+    static AdjacencyList alist_evaporate;
+
 
 private:
-  bool rnd {true};
+    bool rnd {true};
 
 };
 
@@ -163,137 +156,118 @@ private:
 class SmartCar : public Car
 {
 public:
-  SmartCar ( Traffic & traffic, CarType type, bool guided );
+    SmartCar(Traffic &traffic, CarType type, bool guided);
 
-  virtual void step();
-  virtual void init();
+    virtual void step();
+    virtual void init();
 
-  virtual void print ( std::ostream & os ) const
-  {
+    virtual void print(std::ostream &os) const {
 
-    os << m_from
-       << " "
-       << to_node()
-       << " "
-       << get_max_steps()
-       << " "
-       << get_step()
-       << " "
-       << static_cast<unsigned int> ( get_type() );
+        os << m_from
+           << " "
+           << to_node()
+           << " "
+           << get_max_steps()
+           << " "
+           << get_step()
+           << " "
+           << static_cast<unsigned int>(get_type());
 
-  }
+    }
 
-  bool get_guided() const
-  {
-    return m_guided;
-  }
-  bool set_route ( std::vector<unsigned int> & route );
-  virtual void nextEdge ( void );
-  virtual void nextGuidedEdge ( void );
-  bool set_fromto ( unsigned int from, unsigned int to );
+    bool get_guided() const {
+        return m_guided;
+    }
+    bool set_route(std::vector<unsigned int> &route);
+    virtual void nextEdge(void);
+    virtual void nextGuidedEdge(void);
+    bool set_fromto(unsigned int from, unsigned int to);
 
-  void set_from(osmium::unsigned_object_id_type f)
-  {
-    m_from = f;
-  }
-  void set_to(osmium::unsigned_object_id_type t)
-  {
-    m_to = t;
-  }
-  void set_step(osmium::unsigned_object_id_type s)
-  {
-    m_step = s;
-  }    
-  
+    void set_from(osmium::unsigned_object_id_type f) {
+        m_from = f;
+    }
+    void set_to(osmium::unsigned_object_id_type t) {
+        m_to = t;
+    }
+    void set_step(osmium::unsigned_object_id_type s) {
+        m_step = s;
+    }
+
 private:
-  bool m_guided {false};
-  bool m_routed {false};
+    bool m_guided {false};
+    bool m_routed {false};
 
-  std::vector<unsigned int> route;
+    std::vector<unsigned int> route;
 
 };
 
 class CopCar : public SmartCar
 {
 public:
-  CopCar ( Traffic & traffic, bool guided, const char *name );
+    CopCar(Traffic &traffic, bool guided, const char *name);
 
-  virtual void print ( std::ostream & os ) const
-  {
+    virtual void print(std::ostream &os) const {
 
-    os << m_from
-       << " "
-       << to_node()
-       << " "
-       << get_max_steps()
-       << " "
-       << get_step()
-       << " "
-       << static_cast<unsigned int> ( get_type() )
-       << " "
-       << get_num_captured_gangsters()
-       << " "
-       << m_name;
+        os << m_from
+           << " "
+           << to_node()
+           << " "
+           << get_max_steps()
+           << " "
+           << get_step()
+           << " "
+           << static_cast<unsigned int>(get_type())
+           << " "
+           << get_num_captured_gangsters()
+           << " "
+           << m_name;
 
-  }
+    }
 
-  std::string get_name() const
-  {
-    return m_name;
-  }
+    std::string get_name() const {
+        return m_name;
+    }
 
-  bool is_passenger() const
-  {
-    return isPassenger;
-  }
+    bool is_passenger() const {
+        return isPassenger;
+    }
 
-  std::shared_ptr<SmartCar> gotOut() 
-  {
-    isPassenger = false;
-    dest_from = 0;
-    return passenger;
-  }
-      
-  int get_num_captured_gangsters() const
-  {
-    return m_num_captured_gangsters;
-  }
+    std::shared_ptr<SmartCar> gotOut() {
+        isPassenger = false;
+        dest_from = 0;
+        return passenger;
+    }
 
-  void captured_gangster ( std::shared_ptr<SmartCar> & passenger)
-  {
-    ++m_num_captured_gangsters;
-    isPassenger = true;
-    this->passenger = passenger; 
-    //dest_from = 2909260989;
-    dest_from = 1491794446;
-    dest_to = 0;    
-  }
-  osmium::unsigned_object_id_type dfrom() const
-  {
-    return dest_from;
-  }
-  osmium::unsigned_object_id_type dto() const
-  {
-    return dest_to;
-  }
-  osmium::unsigned_object_id_type dfrom(osmium::unsigned_object_id_type df)
-  {
-    dest_from = df;
-  }
-  osmium::unsigned_object_id_type dto(osmium::unsigned_object_id_type dt)
-  {
-    dest_to = dt;
-  }
-    
+    int get_num_captured_gangsters() const {
+        return m_num_captured_gangsters;
+    }
+
+    void captured_gangster(std::shared_ptr<SmartCar> &passenger);
+
+    osmium::unsigned_object_id_type dfrom() const {
+        return dest_from;
+    }
+    osmium::unsigned_object_id_type dto() const {
+        return dest_to;
+    }
+    osmium::unsigned_object_id_type dfrom(osmium::unsigned_object_id_type df) {
+        dest_from = df;
+    }
+    osmium::unsigned_object_id_type dto(osmium::unsigned_object_id_type dt) {
+        dest_to = dt;
+    }
+
 protected:
 
-  int m_num_captured_gangsters {0};
-  std::string m_name;
-  std::shared_ptr<SmartCar> passenger{nullptr};
-  bool isPassenger{false};
-  osmium::unsigned_object_id_type dest_from {0/*2909260989*/};
-  osmium::unsigned_object_id_type dest_to {0/*2909261503*/};
+    int m_num_captured_gangsters {0};
+    std::string m_name;
+    std::shared_ptr<SmartCar> passenger {nullptr};
+    bool isPassenger {false};
 
+    osmium::unsigned_object_id_type dest_from {0/*2909260989*/};
+    osmium::unsigned_object_id_type dest_to {0/*2909261503*/};
+    
+    static int license_plate_number;
 };
 
 }
