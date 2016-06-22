@@ -208,6 +208,35 @@ void justine::sampleclient::MyShmClient::car(boost::asio::ip::tcp::socket &socke
 
 }
 
+void justine::sampleclient::MyShmClient::taxi(boost::asio::ip::tcp::socket &socket, int id, unsigned *f, unsigned *t, unsigned *s)
+{
+
+    boost::system::error_code err;
+
+    size_t length = std::sprintf(data, "<taxi ");
+    length += std::sprintf(data + length, "%d>", id);
+
+    socket.send(boost::asio::buffer(data, length));
+
+    length = socket.read_some(boost::asio::buffer(data), err);
+
+    if (err == boost::asio::error::eof) {
+
+        // TODO
+
+    } else if (err) {
+
+        throw boost::system::system_error(err);
+    }
+
+    int idd {0};
+    std::sscanf(data, "<OK %d %u %u %u", &idd, f, t, s);
+
+    std::cout.write(data, length);
+    std::cout << "Command TAXI sent." << std::endl;
+
+}
+
 void justine::sampleclient::MyShmClient::route(
     boost::asio::ip::tcp::socket &socket,
     int id,
@@ -266,13 +295,36 @@ void justine::sampleclient::MyShmClient::start(boost::asio::io_service &io_servi
     unsigned int f {0u};
     unsigned int t {0u};
     unsigned int s {0u};
+    unsigned int tf {0u};
+    unsigned int tt {0u};
+    unsigned int ts {0u};
 
     std::vector<Gangster> gngstrs;
 
     for (;;) {
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
-
+	
         car(socket, id, &f, &t, &s);
+	taxi(socket, id, &tf, &tt, &ts);
+	
+	std::cout << tf << " " << tt << " " << ts << std::endl;
+
+	if(tf)
+	{
+	  
+            std::vector<osmium::unsigned_object_id_type> path = hasDijkstraPath(t, tf);
+
+            if (path.size() > 1) {
+
+                std::copy(path.begin(), path.end(),
+                          std::ostream_iterator<osmium::unsigned_object_id_type> (std::cout, " -> "));
+
+                route(socket, id, path);
+            }
+	  
+	  continue;
+	}
+	
 
         gngstrs = gangsters(socket, id, t);
 

@@ -118,7 +118,7 @@ protected:
   osmium::unsigned_object_id_type m_from {3130863972};
   osmium::unsigned_object_id_type m_to {0};
   osmium::unsigned_object_id_type m_step {0};
-
+    
 private:
 
 };
@@ -192,6 +192,19 @@ public:
   virtual void nextGuidedEdge ( void );
   bool set_fromto ( unsigned int from, unsigned int to );
 
+  void set_from(osmium::unsigned_object_id_type f)
+  {
+    m_from = f;
+  }
+  void set_to(osmium::unsigned_object_id_type t)
+  {
+    m_to = t;
+  }
+  void set_step(osmium::unsigned_object_id_type s)
+  {
+    m_step = s;
+  }    
+  
 private:
   bool m_guided {false};
   bool m_routed {false};
@@ -237,6 +250,7 @@ public:
   std::shared_ptr<SmartCar> gotOut() 
   {
     isPassenger = false;
+    dest_from = 0;
     return passenger;
   }
       
@@ -250,14 +264,35 @@ public:
     ++m_num_captured_gangsters;
     isPassenger = true;
     this->passenger = passenger; 
+    //dest_from = 2909260989;
+    dest_from = 1491794446;
+    dest_to = 0;    
   }
-  
+  osmium::unsigned_object_id_type dfrom() const
+  {
+    return dest_from;
+  }
+  osmium::unsigned_object_id_type dto() const
+  {
+    return dest_to;
+  }
+  osmium::unsigned_object_id_type dfrom(osmium::unsigned_object_id_type df)
+  {
+    dest_from = df;
+  }
+  osmium::unsigned_object_id_type dto(osmium::unsigned_object_id_type dt)
+  {
+    dest_to = dt;
+  }
+    
 protected:
 
   int m_num_captured_gangsters {0};
   std::string m_name;
   std::shared_ptr<SmartCar> passenger{nullptr};
   bool isPassenger{false};
+  osmium::unsigned_object_id_type dest_from {0/*2909260989*/};
+  osmium::unsigned_object_id_type dest_to {0/*2909261503*/};
 
 };
 

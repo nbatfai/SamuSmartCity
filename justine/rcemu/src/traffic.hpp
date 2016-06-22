@@ -281,13 +281,19 @@ public:
             } else {
 
 
-                toGPS(2909260989, 0, 0, &lon2, &lat2);
+                toGPS(car1->dfrom(), car1->dto(), 0, &lon2, &lat2);
                 double d = dst(lon1, lat1, lon2, lat2);
 
                 if (d < m_catchdist) {
 
-                    car1->gotOut()->set_type(CarType::GANGSTER);
-
+		  osmium::unsigned_object_id_type df = car1->dfrom();
+		  std::shared_ptr<SmartCar> sc = car1->gotOut();
+                    
+		  sc->set_type(CarType::CAUGHT);
+		  sc->set_from(df);
+		  sc->set_to(0);
+		  sc->set_step(0);
+		  
                 }
 
             }

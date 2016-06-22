@@ -47,6 +47,7 @@ INT	[0123456789]+
 FLOAT	[-.0123456789]+
 ROUTE	"<route"
 CAR	"<car"
+TAXI	"<taxi"
 POS	"<pos"
 GANGSTERS	"<gangsters"
 STAT	"<stat"
@@ -62,6 +63,10 @@ DISP	"<disp>"
 {CAR}{WS}{INT}				{
 					  std::sscanf(yytext, "<car %d", &m_id);
 					  m_cmd = 1001;
+					}
+{TAXI}{WS}{INT}				{
+					  std::sscanf(yytext, "<taxi %d", &m_id);
+					  m_cmd = 10001;
 					}
 {STAT}{WS}{INT}				{
 					  std::sscanf(yytext, "<stat %d", &m_id);

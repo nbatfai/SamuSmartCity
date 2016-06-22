@@ -501,6 +501,7 @@ private:
     std::vector<Cop> initcops(boost::asio::ip::tcp::socket &socket);
     void pos(boost::asio::ip::tcp::socket &socket, int id);
     void car(boost::asio::ip::tcp::socket &socket, int id, unsigned *f, unsigned *t, unsigned *s);
+    void taxi(boost::asio::ip::tcp::socket &socket, int id, unsigned *f, unsigned *t, unsigned *s);
     void route(boost::asio::ip::tcp::socket &socket, int id, std::vector<osmium::unsigned_object_id_type> &);
 };
 

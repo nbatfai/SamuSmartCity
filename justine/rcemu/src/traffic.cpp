@@ -188,6 +188,34 @@ void justine::robocar::Traffic::cmd_session(boost::asio::ip::tcp::socket client_
                     length += std::sprintf(data + length, "<ERR unknown car id>");
 
 
+            } else if (cl.get_cmd() == 10001) {
+
+                if (m_smart_cars_map.find(cl.get_id()) != m_smart_cars_map.end()) {
+
+                    std::shared_ptr<SmartCar> c = m_smart_cars_map[cl.get_id()];
+
+
+                    bool found {false};
+                    for (auto cop : m_cop_cars) {
+
+                        if (c == cop) {
+			  
+                            found = true;
+                            length += std::sprintf(data + length,
+                                                   "<OK %d %u %u %u>", cl.get_id(), cop->dfrom(), cop->dto(), 0);
+
+                            break;
+                        }
+
+                    }
+
+                    if (!found)
+                        length += std::sprintf(data + length, "<ERR unknown cop>");
+
+                } else
+                    length += std::sprintf(data + length, "<ERR unknown car id>");
+
+
             } else if (cl.get_cmd() == 1002) {
 
                 std::lock_guard<std::mutex> lock(cars_mutex);
