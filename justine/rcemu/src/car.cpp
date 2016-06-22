@@ -62,8 +62,8 @@ justine::robocar::CopCar::CopCar(justine::robocar::Traffic &traffic,
                                  bool guided, const char *name) :
     justine::robocar::SmartCar(traffic, CarType::POLICE, guided), m_name(name)
 {
-  
-    m_name += std::to_string(license_plate_number++);
+    number = license_plate_number++;
+    m_name += std::to_string(number) + "-free";
 }
 
 void justine::robocar::CopCar::captured_gangster(std::shared_ptr<SmartCar> &passenger)
@@ -79,6 +79,12 @@ void justine::robocar::CopCar::captured_gangster(std::shared_ptr<SmartCar> &pass
     dest_from = traffic.node();
     dest_to = 0;
 
+    std::string free("free");    
+    int i = m_name.find(free);
+    
+    if(i != std::string::npos)
+      m_name.replace(i,free.length(),"full");
+    
 }
 
 void justine::robocar::Car::init()

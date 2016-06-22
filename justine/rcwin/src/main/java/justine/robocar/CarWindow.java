@@ -171,11 +171,12 @@ public class CarWindow extends javax.swing.JFrame {
                         if (type == 1) {
                             num_captured_gangsters = scan.nextInt();
                             name = scan.next();
+                            String nname = name.substring(0, 7);
 
-                            if (cops.containsKey(name)) {
-                                cops.put(name, cops.get(name) + num_captured_gangsters);
+                            if (cops.containsKey(nname)) {
+                                cops.put(nname, cops.get(nname) + num_captured_gangsters);
                             } else {
-                                cops.put(name, num_captured_gangsters);
+                                cops.put(nname, num_captured_gangsters);
                             }
                         }
 

@@ -39,6 +39,7 @@
 #include <osmreader.hpp>
 #include <algorithm>
 
+#include <string>
 
 namespace justine
 {
@@ -235,6 +236,13 @@ public:
     std::shared_ptr<SmartCar> gotOut() {
         isPassenger = false;
         dest_from = 0;
+
+        std::string free("full");
+    int i = m_name.find(free);
+    
+    if(i != std::string::npos)
+      m_name.replace(i,free.length(),"free");
+
         return passenger;
     }
 
@@ -266,7 +274,8 @@ protected:
 
     osmium::unsigned_object_id_type dest_from {0/*2909260989*/};
     osmium::unsigned_object_id_type dest_to {0/*2909261503*/};
-    
+
+    int number;
     static int license_plate_number;
 };
 

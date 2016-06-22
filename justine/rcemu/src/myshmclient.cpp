@@ -86,7 +86,7 @@ std::vector<justine::sampleclient::MyShmClient::Cop> justine::sampleclient::MySh
 
     boost::system::error_code err;
 
-    size_t length = std::sprintf(data, "<init guided %s 10 c>", m_teamname.c_str());
+    size_t length = std::sprintf(data, "<init guided %s 100 c>", m_teamname.c_str());
 
     socket.send(boost::asio::buffer(data, length));
 
@@ -303,15 +303,12 @@ void justine::sampleclient::MyShmClient::start(boost::asio::io_service &io_servi
 
     for (;;) {
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
-	
-        car(socket, id, &f, &t, &s);
-	taxi(socket, id, &tf, &tt, &ts);
-	
-	std::cout << tf << " " << tt << " " << ts << std::endl;
 
-	if(tf)
-	{
-	  
+        car(socket, id, &f, &t, &s);
+        taxi(socket, id, &tf, &tt, &ts);
+
+        if (tf) {
+
             std::vector<osmium::unsigned_object_id_type> path = hasDijkstraPath(t, tf);
 
             if (path.size() > 1) {
@@ -321,10 +318,10 @@ void justine::sampleclient::MyShmClient::start(boost::asio::io_service &io_servi
 
                 route(socket, id, path);
             }
-	  
-	  continue;
-	}
-	
+
+            continue;
+        }
+
 
         gngstrs = gangsters(socket, id, t);
 
@@ -370,6 +367,9 @@ void justine::sampleclient::MyShmClient::start10(boost::asio::io_service &io_ser
     unsigned int f {0u};
     unsigned int t {0u};
     unsigned int s {0u};
+    unsigned int tf {0u};
+    unsigned int tt {0u};
+    unsigned int ts {0u};
 
     std::vector<Gangster> gngstrs;
 
@@ -377,7 +377,24 @@ void justine::sampleclient::MyShmClient::start10(boost::asio::io_service &io_ser
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
 
         for (auto cop : cops) {
+	  
             car(socket, cop, &f, &t, &s);
+            taxi(socket, cop, &tf, &tt, &ts);
+
+            if (tf) {
+
+                std::vector<osmium::unsigned_object_id_type> path = hasDijkstraPath(t, tf);
+
+                if (path.size() > 1) {
+
+                    std::copy(path.begin(), path.end(),
+                              std::ostream_iterator<osmium::unsigned_object_id_type> (std::cout, " -> "));
+
+                    route(socket, cop, path);
+                }
+
+                continue;
+            }
 
             gngstrs = gangsters(socket, cop, t);
 
