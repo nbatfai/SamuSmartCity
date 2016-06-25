@@ -234,14 +234,17 @@ public:
     }
 
     std::shared_ptr<SmartCar> gotOut() {
+
+        ++m_num_captured_gangsters;
+
         isPassenger = false;
         dest_from = 0;
 
         std::string free("full");
-    int i = m_name.find(free);
-    
-    if(i != std::string::npos)
-      m_name.replace(i,free.length(),"free");
+        int i = m_name.find(free);
+
+        if (i != std::string::npos)
+            m_name.replace(i, free.length(), "free");
 
         return passenger;
     }

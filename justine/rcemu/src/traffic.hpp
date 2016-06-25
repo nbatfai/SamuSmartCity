@@ -194,7 +194,7 @@ public:
 
         std::map <std::string, int> res;
         for (auto c : m_cop_cars) {
-            res[c->get_name()] += c->get_num_captured_gangsters();
+            res[c->get_name().substr(0, 7)] += c->get_num_captured_gangsters();
         }
 
         std::ostringstream ss;

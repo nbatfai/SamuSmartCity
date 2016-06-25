@@ -61,8 +61,8 @@ int main ( int argc, char* argv[] )
 
   if ( vm.count ( "version" ) )
     {
-      std::cout << "Robocar City Emulator and Robocar World Championship, Traffic Server" << std::endl
-                << "Copyright (C) 2014, 2015 Norbert Bátfai\n" << std::endl
+      std::cout << "OOCWC Raxicab (SamuSmartCity) - rObOCar World Championship, Traffic Server" << std::endl
+                << "Copyright (C) 2014, 2015, 2016 Norbert Bátfai\n" << std::endl
                 << "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>" << std::endl
                 << "This is free software: you are free to change and redistribute it." << std::endl
                 << "There is NO WARRANTY, to the extent permitted by law." << std::endl;
@@ -71,7 +71,7 @@ int main ( int argc, char* argv[] )
 
   if ( vm.count ( "help" ) )
     {
-      std::cout << "Robocar City Emulator and Robocar World Championship home page: https://code.google.com/p/robocar-emulator/" << std::endl;
+      std::cout << "OOCWC Raxicab (SamuSmartCity) - rObOCar World Championship home page: https://github.com/nbatfai/SamuSmartCity" << std::endl;
       std::cout << desc << std::endl;
       std::cout << "Please report bugs to: nbatfai@gmail.com" << std::endl;
       return 0;

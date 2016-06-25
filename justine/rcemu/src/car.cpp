@@ -69,7 +69,7 @@ justine::robocar::CopCar::CopCar(justine::robocar::Traffic &traffic,
 void justine::robocar::CopCar::captured_gangster(std::shared_ptr<SmartCar> &passenger)
 {
 
-    ++m_num_captured_gangsters;
+    //++m_num_captured_gangsters;
     isPassenger = true;
     this->passenger = passenger;
     //dest_from = 2909260989;
