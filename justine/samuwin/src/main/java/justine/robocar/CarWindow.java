@@ -42,8 +42,10 @@ class SamuOverlay implements org.jxmapviewer.painter.Painter<org.jxmapviewer.JXM
     int cells[][];
     double dx, dy;
 
-    public SamuOverlay ( int scale )
+    public SamuOverlay ( int scale, double [] rect )
     {
+
+        minlat=rect[0]; minlon=rect[1]; maxlat=rect[2]; maxlon=rect[3];
         this.scale = scale;
 
         dx= ( maxlat - minlat ) / ( ( double ) scale );
@@ -252,7 +254,7 @@ public class CarWindow extends javax.swing.JFrame
     org.jxmapviewer.JXMapViewer jXMapViewer
         = new org.jxmapviewer.JXMapViewer();
 
-    SamuOverlay samuOverlay = new SamuOverlay ( 100 );
+    SamuOverlay samuOverlay;
 
     java.util.Map<Long, Loc> lmap = null;
     java.io.File tfile = null;
@@ -525,8 +527,10 @@ public class CarWindow extends javax.swing.JFrame
 
     };
 
-    public CarWindow ( double lat, double lon, java.util.Map<Long, Loc> lmap, String hostname, int port )
+    public CarWindow ( double lat, double lon, java.util.Map<Long, Loc> lmap, String hostname, int port, double [] rect )
     {
+
+        samuOverlay = new SamuOverlay ( 100, rect );
 
         this.lmap = lmap;
         this.hostname = hostname;
@@ -683,7 +687,7 @@ public class CarWindow extends javax.swing.JFrame
         }
     }
 
-    public static void readMap ( java.util.Map<Long, Loc> lmap, String name )
+    public static double[] readMap ( java.util.Map<Long, Loc> lmap, String name )
     {
 
         java.util.Scanner scan;
@@ -691,6 +695,8 @@ public class CarWindow extends javax.swing.JFrame
 
         long ref = 0;
         double lat = 0.0, lon = 0.0;
+        double minlat=Double.MAX_VALUE, minlon=Double.MAX_VALUE, maxlat=Double.MIN_VALUE, maxlon=Double.MIN_VALUE;
+
         try {
 
             scan = new java.util.Scanner ( file );
@@ -703,6 +709,16 @@ public class CarWindow extends javax.swing.JFrame
 
                 lmap.put ( ref, new Loc ( lat, lon ) );
 
+                if ( lat<minlat ) {
+                    minlat = lat;
+                } else if ( lat>maxlat ) {
+                    maxlat = lat;
+                } else if ( lon<minlon ) {
+                    minlon = lon;
+                } else if ( lon>minlon ) {
+                    maxlon = lon;
+                }
+
             }
 
         } catch ( Exception e ) {
@@ -713,6 +729,7 @@ public class CarWindow extends javax.swing.JFrame
 
         }
 
+        return new double[] {minlat, minlon, maxlat, maxlon};
     }
 
     public static void main ( String[] args )
@@ -722,20 +739,20 @@ public class CarWindow extends javax.swing.JFrame
 
         if ( args.length == 1 ) {
 
-            readMap ( lmap, args[0] );
+            final double[] rect = readMap ( lmap, args[0] );
 
             javax.swing.SwingUtilities.invokeLater ( new Runnable() {
                 public void run() {
 
                     java.util.Map.Entry<Long, Loc> e = lmap.entrySet().iterator().next();
 
-                    new CarWindow ( e.getValue().lat, e.getValue().lon, lmap, "localhost", 10007 ).setVisible ( true );
+                    new CarWindow ( e.getValue().lat, e.getValue().lon, lmap, "localhost", 10007, rect ).setVisible ( true );
                 }
             } );
 
         } else if ( args.length == 2 ) {
 
-            readMap ( lmap, args[0] );
+            final double[] rect = readMap ( lmap, args[0] );
 
             final String hostname = args[1];
 
@@ -744,13 +761,13 @@ public class CarWindow extends javax.swing.JFrame
 
                     java.util.Map.Entry<Long, Loc> e = lmap.entrySet().iterator().next();
 
-                    new CarWindow ( e.getValue().lat, e.getValue().lon, lmap, hostname, 10007 ).setVisible ( true );
+                    new CarWindow ( e.getValue().lat, e.getValue().lon, lmap, hostname, 10007, rect ).setVisible ( true );
                 }
             } );
 
         } else if ( args.length == 3 ) {
 
-            readMap ( lmap, args[0] );
+            final double[] rect = readMap ( lmap, args[0] );
 
             final String hostname = args[1];
             final int port = Integer.parseInt ( args[2] );
@@ -760,7 +777,7 @@ public class CarWindow extends javax.swing.JFrame
 
                     java.util.Map.Entry<Long, Loc> e = lmap.entrySet().iterator().next();
 
-                    new CarWindow ( e.getValue().lat, e.getValue().lon, lmap, hostname, port ).setVisible ( true );
+                    new CarWindow ( e.getValue().lat, e.getValue().lon, lmap, hostname, port, rect ).setVisible ( true );
                 }
             } );
 
