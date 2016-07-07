@@ -12,11 +12,9 @@ Samu's COP-based prediction engine and the traffic simulation. It can be seen in
 
 ![screenshot_20160623_065126](https://cloud.githubusercontent.com/assets/3148120/16358465/893b5cf8-3b13-11e6-879d-44bb55e718ed.png)
 
-### Milestones
-
-First we need to create a test environment where we will be able to tune the interactions between 
-Samu's COP-based prediction engine and the traffic simulation. It can be seen in this video: https://youtu.be/97L7ure2nPw
 
 ### RAXICAB as a cellular automata
 
 Added a new display program called SamuWin. It can be seen in action at https://youtu.be/mRZyulN4CCE
+
+![screenshot_20160707_104049](https://cloud.githubusercontent.com/assets/3148120/16647404/4e3a97f2-442f-11e6-9bdf-9b8cd3aa48d5.png)
