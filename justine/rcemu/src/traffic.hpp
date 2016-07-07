@@ -167,7 +167,8 @@ public:
 
         for (; m_run;) {
 
-            if (++m_time > (m_minutes * 60 * 1000) / m_delay) {
+	    ++m_time;
+            if (false){//++m_time > (m_minutes * 60 * 1000) / m_delay) {
                 m_run = false;
                 break;
             } else {

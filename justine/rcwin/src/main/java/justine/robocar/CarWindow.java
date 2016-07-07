@@ -207,9 +207,11 @@ public class CarWindow extends javax.swing.JFrame {
 
                     }
 
+                    /*
                     if (time >= minutes * 60 * 1000 / 200) {
                         scan = null;
                     }
+                    */
 
                     StringBuilder sb = new StringBuilder();
 
